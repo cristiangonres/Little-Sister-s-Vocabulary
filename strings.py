@@ -1,5 +1,5 @@
 """Functions for creating, transforming, and adding prefixes to strings."""
-
+import re
 
 def add_prefix_un(word):
     """Take the given word and add the 'un' prefix.
@@ -26,10 +26,9 @@ def make_word_groups(vocab_words):
     For example: list('en', 'close', 'joy', 'lighten'),
     produces the following string: 'en :: enclose :: enjoy :: enlighten'.
     """
-    words_prefix = [vocab_words[0]]
-    for word in vocab_words[1:]:
-        words_prefix.append(vocab_words[0] + word)
-    return ' :: '.join(words_prefix)
+
+    joiner = ' :: ' + vocab_words[0]
+    return joiner.join(vocab_words)
 
 
 def remove_suffix_ness(word):
@@ -58,4 +57,4 @@ def adjective_to_verb(sentence, index):
     For example, ("It got dark as the sun set.", 2) becomes "darken".
     """
 
-    return sentence.replace('.','').split(' ')[index] + 'en'
+    return re.findall(r'\w+', sentence)[index] + 'en'
